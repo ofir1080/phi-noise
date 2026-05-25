@@ -66,3 +66,8 @@ secrets.yml
 *.mov
 *.avi
 *.mkv
+
+# exclude:
+!static/media/phi_noise_vid.mp4
+!static/media/teaser.mov
+!static/media/results/*
