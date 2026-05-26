@@ -46,7 +46,7 @@ section { padding: 2rem; }
 
 /* ─── Typography ─── */
 h1 { font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 500; line-height: 1.18; max-width: 1080px; margin-bottom: 0.5rem; }
-h1 .phi { color: var(--accent); font-style: italic; }
+h1 .phi { color: var(--accent); font-style: italic;}
 
 h2 { font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500; margin-bottom: 1.5rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--accent-light); }
 
@@ -224,3 +224,83 @@ footer p + p { margin-top:0.4rem; }
 /* Narrow containers for readability */
 #abstract .method-figure, #analysis .method-figure, #method .method-figure, #results .method-figure, #comparisons .method-figure { max-width:1200px; margin-left:auto; margin-right:auto; padding-left:0.75rem; padding-right:0.75rem; }
 #comparisons .method-figure, #comparisons .container { max-width:1200px !important; margin-left:auto; margin-right:auto; padding-left:1.5rem; padding-right:1.5rem; }
+
+/* ─── Mobile-specific enhancements (preserve desktop styles) ─── */
+/* These rules only override layout/spacing for small viewports. */
+@media (max-width: 700px) {
+  /* Navbar: reduce padding and allow wrapping for many links */
+  #navbar {
+    padding: 0.6rem 1rem;
+    gap: 0.8rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  /* Teasers: stack and allow wrapping */
+  .teaser-row { flex-wrap: wrap; gap: 1rem; }
+  .teaser-item { width: 100% !important; }
+  .teaser-placeholder { height: 220px; }
+
+  /* CTA buttons: larger touch targets and stacked */
+  .ctas { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .btn { padding: 0.6rem 0.9rem; font-size: 1rem; border-radius: 10px; }
+
+  /* Authors and small utilities */
+  .authors { gap: 0.4rem 1rem; justify-content: center; }
+  .affiliations { text-align: center; }
+
+  /* Grids collapse to single column where appropriate */
+  .overview-grid { grid-template-columns: 1fr; }
+  .pipeline-diagram { padding: 1rem; min-height: 140px; }
+
+  /* Comparison and gallery collapse */
+  .comparison-row.cols-2, .comparison-row.cols-3, .comparison-row.cols-4 { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+
+  /* Ensure media scale nicely */
+  .figure-image, .comparison-video, .responsive-video, .project-video { width: 100%; height: auto; }
+
+  /* Narrow containers padding for comfortable margins */
+  .container, .container-wide, .container-inner { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Applications heading: keep left-aligned and slightly inset on all viewports */
+#applications > h2 {
+  text-align: left;
+  margin: 1.25rem 0 0.75rem 1rem;
+  max-width: 1200px;
+}
+
+@media (min-width: 900px) {
+  /* on wide desktops keep existing spacing but ensure heading sits above content */
+  #applications > h2 { margin-left: 0; padding-left: 2rem; }
+}
+
+@media (max-width: 480px) {
+  /* Slightly smaller base type for small phones */
+  body { font-size: 15px; line-height: 1.6; }
+
+  /* Hero: reduce top padding and left-align for easier reading */
+  #hero { padding: 5.5rem 1.25rem 1.25rem; text-align: left; }
+  h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); text-align: left; }
+  .subtitle { text-align: left; max-width: 100%; }
+
+  /* Navbar: compact and horizontally scrollable when necessary */
+  #navbar { padding: 0.5rem 0.75rem; gap: 0.6rem; overflow-x: auto; justify-content: flex-start; }
+  #navbar a { padding: 0.45rem 0.6rem; display: inline-block; }
+
+  /* Teasers and galleries fully stacked */
+  .teaser-row { flex-direction: column; }
+  .teaser-item { width: 100% !important; }
+  .gallery-grid { grid-template-columns: 1fr; }
+
+  /* Tabs and tab-bar scrollable */
+  .tab-bar { overflow-x: auto; }
+  .tab-btn { padding: 0.55rem 0.9rem; white-space: nowrap; }
+
+  /* Make CTAs fill width for easy tapping */
+  .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+
+  /* Footer compact */
+  footer { padding: 1.25rem; font-size: 0.78rem; }
+}
