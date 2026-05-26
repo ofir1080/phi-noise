@@ -46,10 +46,10 @@
   </h1>
 
   <div class="authors">
-    <span class="author"><a href="#">Ofir Abramovich</a><sup>*</sup></span>
-    <span class="author"><a href="#">Nadav Z. Cohen</a><sup>*</sup></span>
-    <span class="author"><a href="#">Adi Rosenthal</a><sup>*</sup></span>
-    <span class="author"><a href="#">Ariel Shamir</a></span>
+    <span class="author"><a href="https://ofir1080.github.io/personal-webpage/">Ofir Abramovich</a><sup>*</sup></span>
+    <span class="author"><a href="https://nadavc220.github.io/">Nadav Z. Cohen</a><sup>*</sup></span>
+    <span class="author"><a href="https://www.linkedin.com/in/adi-rosenthal-24a3291aa/">Adi Rosenthal</a><sup>*</sup></span>
+    <span class="author"><a href="https://faculty.runi.ac.il/arik/site/index.html">Ariel Shamir</a></span>
   </div>
 
   <div class="affiliations">
@@ -59,21 +59,21 @@
   <div class="equal-contrib">* Equal Contribution</div>
 
   <div class="ctas">
-    <a class="btn btn-outline" href="https://arxiv.org/" target="_blank" rel="noopener noreferrer">
-      <img style="width: 20px; height: 20px"; class="site-icon" src="static/icons/pdf.png" alt="PDF logo" />
-      PDF
-    </a>
-    <a class="btn btn-outline" href="https://github.com/" target="_blank" rel="noopener noreferrer">
-      <img style="width: 20px; height: 20px"; class="site-icon" src="static/icons/github.png" alt="GitHub logo" />
-      Code
-    </a>
-    <a class="btn btn-outline" href="https://arxiv.org/" target="_blank" rel="noopener noreferrer">
+    <a class="btn btn-outline" href="http://arxiv.org/abs/2605.24509" target="_blank" rel="noopener noreferrer">
       <img style="width: 40px; height: 30px"; class="site-icon" src="static/icons/arxiv.png" alt="arXiv logo" />
       arXiv
+    </a>
+    <a class="btn btn-outline" href="http://arxiv.org/pdf/2605.24509" target="_blank" rel="noopener noreferrer">
+      <img style="width: 20px; height: 20px"; class="site-icon" src="static/icons/pdf.png" alt="PDF logo" />
+      PDF
     </a>
     <a class="btn btn-outline" href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">
       <img style="width: 30px; height: 30px"; class="site-icon" src="static/icons/huggingface.png" alt="Hugging Face logo" />
       Hugging Face
+    </a>
+    <a class="btn btn-outline" href="#" target="_blank" rel="noopener noreferrer">
+      <img style="width: 20px; height: 20px"; class="site-icon" src="static/icons/github.png" alt="GitHub logo" />
+      Code
     </a>
     <!-- <a class="btn btn-outline" href="#">
       <i class="fas fa-database"></i> Dataset
@@ -140,9 +140,9 @@
   </div><!-- /teaser -->
 </section>
 
-<section id="overview">
-  <div class="overview-grid">
-    <article id="abstract" class="overview-card overview-abstract">
+<section id="abstract">
+  <div class="method-figure">
+    <!-- <article id="abstract" class="overview-card overview-abstract"> -->
       <h2>Abstract</h2>
       <p class="abstract-text">
         Latent video diffusion models generate videos by progressively transforming Gaussian noise
@@ -158,9 +158,11 @@
         and dynamics in generated videos, while achieving competitive or superior results compared
         to more complex conditioning approaches.
       </p>
-    </article>
+    <!-- </article> -->
+</section> 
 
-    <div class="overview-card overview-how">
+<section id="method">
+    <div class="method-figure">
       <h2>How Does It Work?</h2>
       <p>
         ϕ-Noise operates by decomposing both the reference video latent and the Gaussian noise
@@ -179,9 +181,8 @@
         across diverse video generation tasks — with no changes to the diffusion model.
       </p>
     </div>
-
   </div>
-</section><!-- /overview -->
+</section>
 
 
 <!-- ════════════════════════════════════════
@@ -218,7 +219,7 @@
         <h2>Analysis</h2>
         <h3 class="underlined">Phase Substitution &amp; Energy Balancing</h3>
 
-            <img src="assets/analysis.png"
+            <img src="static/analysis.png"
               alt="ϕ-Noise method overview figure"
               class="figure-image"/>
           <p class="fig-caption">
