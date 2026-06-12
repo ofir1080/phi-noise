@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="ϕ-Noise: Training-Free Temporal Video Conditioning via Phase-Based Noise Manipulation — Reichman University Canvas-Lab"/>
+
+  <title>ϕ-Noise: Training-Free Temporal Video Conditioning</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Project stylesheet -->
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#abstract">Abstract</a>
+  <a href="#project-video">Video</a>
+  <a href="#applications">Applications</a>
+  <a href="#overview">Method</a>
+  <a href="#comparisons">Comparisons</a>
+  <a href="#bibtex">BibTeX</a>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+
+  <div class="venue-badge">Preprint · 2026</div>
+
+  <h1 style="text-align: center;">
+    <span class="phi">ϕ</span>-Noise:<br>
+    Training-Free Temporal Video Conditioning<br>via Phase-Based Noise Manipulation
+  </h1>
+
+  <div class="authors">
+    <span class="author"><a href="https://ofir1080.github.io/personal-webpage/">Ofir Abramovich</a><sup>*</sup></span>
+    <span class="author"><a href="https://nadavc220.github.io/">Nadav Z. Cohen</a><sup>*</sup></span>
+    <span class="author"><a href="https://www.linkedin.com/in/adi-rosenthal-24a3291aa/">Adi Rosenthal</a><sup>*</sup></span>
+    <span class="author"><a href="https://faculty.runi.ac.il/arik/site/index.html">Ariel Shamir</a></span>
+  </div>
+
+  <div class="affiliations">
+    Canvas-Lab &nbsp;·&nbsp; Department of Computer Science, Reichman University
+  </div>
+
+  <div class="equal-contrib">* Equal Contribution</div>
+
+  <div class="ctas">
+    <a class="btn btn-outline" href="http://arxiv.org/abs/2605.24509" target="_blank" rel="noopener noreferrer">
+      <img style="width: 40px; height: 30px"; class="site-icon" src="static/icons/arxiv.png" alt="arXiv logo" />
+      arXiv
+    </a>
+    <a class="btn btn-outline" href="http://arxiv.org/pdf/2605.24509" target="_blank" rel="noopener noreferrer">
+      <img style="width: 20px; height: 20px"; class="site-icon" src="static/icons/pdf.png" alt="PDF logo" />
+      PDF
+    </a>
+    <a class="btn btn-outline" href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">
+      <img style="width: 30px; height: 30px"; class="site-icon" src="static/icons/huggingface.png" alt="Hugging Face logo" />
+      Hugging Face
+    </a>
+    <a class="btn btn-outline" href="#" target="_blank" rel="noopener noreferrer">
+      <img style="width: 20px; height: 20px"; class="site-icon" src="static/icons/github.png" alt="GitHub logo" />
+      Code
+    </a>
+    <!-- <a class="btn btn-outline" href="#">
+      <i class="fas fa-database"></i> Dataset
+    </a> -->
+  </div>
+</section><!-- /hero -->
+
+<!-- ════════════════════════════════════════
+     TEASER VIDEO
+════════════════════════════════════════ -->
+
+<div id="teaser">
+  <p class="subtitle text-center muted-strong" style="text-align: center;">
+    Simple, zero-training video motion control through<br>frequency-domain phase injection into diffusion noise latents.
+    <br><br>
+    <video autoplay muted loop playsinline class="responsive-video">
+      <source src="static/media/teaser.mov" type="video/mp4">
+    </video>
+  </p>
+</div><!-- /teaser -->
+
+<!-- New Video Gallery -->
+<section id="project-video">
+  <div class="container project-video-container">
+    <!-- <h2>Project Video</h2>
+    <p class="muted-small">A short project teaser demonstrating ϕ-Noise in action.</p> -->
+
+    <video controls playsinline preload="metadata" poster="static/media/repr_frame.png" class="project-video">
+      <source src="static/media/phi_noise_vid.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     TEASER VIDEO
+════════════════════════════════════════ -->
+<section id="applications">
+  <div class="method-figure">
+    <h2>Applications</h2>
+    <div class="teaser-row">
+    <div class="teaser-item">
+      <h3>I2V Motion Transfer</h3>
+      <video autoplay muted loop playsinline class="responsive-video">
+        <source src="static/media/results/t2.mov" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="teaser-item">
+      <h3>Motion Transfer (+ Structure Conditioning)</h3>
+      <video autoplay muted loop playsinline class="responsive-video">
+        <source src="static/media/results/t3.mov" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="teaser-item">
+      <h3>Cut & Drag</h3>
+      <video autoplay muted loop playsinline class="responsive-video">
+        <source src="static/media/results/t1.mov" type="video/mp4">
+      </video>
+    </div>
+
+    </div><!-- /teaser-row -->
+  </div><!-- /method-figure -->
+</section>
+
+<section id="abstract">
+  <div class="method-figure">
+    <!-- <article id="abstract" class="overview-card overview-abstract"> -->
+      <h2>Abstract</h2>
+      <p class="abstract-text">
+        Latent video diffusion models generate videos by progressively transforming Gaussian noise
+        into realistic samples conditioned on text or visual inputs. However, existing conditioning
+        methods often require additional training and computational overhead. Motivated by recent
+        findings on the importance of frequency components in generative models, we propose a
+        simple, training-free approach for motion-conditioned video generation by injecting
+        low-frequency phase information from a reference video directly into the diffusion noise latents.
+      </p>
+      <p class="abstract-text">
+        Our method transfers motion cues without modifying the model architecture or inference
+        pipeline. Using several applications, we demonstrate effective control over both appearance
+        and dynamics in generated videos, while achieving competitive or superior results compared
+        to more complex conditioning approaches.
+      </p>
+    <!-- </article> -->
+</section> 
+
+<section id="method">
+    <div class="method-figure">
+      <h2>How Does It Work?</h2>
+      <p>
+        ϕ-Noise operates by decomposing both the reference video latent and the Gaussian noise
+        latent into the frequency domain via the Discrete Fourier Transform (DFT). The
+        low-frequency <em>phase</em> components of the noise — which encode coarse spatial
+        structure and dominant temporal dynamics — are replaced with those from the reference.
+        A Spectral-Temporal Energy Balancing Mask <strong>Φ</strong> is then applied to preserve
+        total signal energy and ensure stable denoising.
+      </p>
+
+      <img src="static/teaser_gif.gif" alt="teaser" class="figure-image" />
+
+      <p class="teaser-caption">
+        <strong>ϕ-Noise</strong> injects low-frequency phase information from a reference video
+        into Gaussian noise latents, enabling training-free motion and structural conditioning
+        across diverse video generation tasks — with no changes to the diffusion model.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     METHOD
+════════════════════════════════════════ -->
+<!-- <section id="method">
+  <div class="method-figure">
+      <h2>Method</h2>
+
+      <p>
+        ϕ-Noise operates by decomposing both the reference video latent and the Gaussian noise
+        latent into the frequency domain via the Discrete Fourier Transform (DFT). The
+        low-frequency <em>phase</em> components of the noise — which encode coarse spatial
+        structure and dominant temporal dynamics — are replaced with those from the reference.
+        A Spectral-Temporal Energy Balancing Mask <strong>Φ</strong> is then applied to preserve
+        total signal energy and ensure stable denoising.
+      </p>
+
+      <div class="method-figure">
+              <img src="static/method_v1.png" alt="Method figure" class="figure-image"/>
+        <p class="fig-caption">
+          <strong>Figure 1.</strong> Method overview. DFT decomposes both reference and noise into
+          phase &amp; magnitude. Low-frequency phases from the reference replace those in the noise;
+          a spectral energy mask Φ restores stability before the modified noise enters the diffusion model.
+        </p>
+      </div>
+  </div>
+</section>/method -->
+    
+<!-- Method figure image placeholder -->
+  <section id="analysis">
+    <div class="method-figure">
+      <!-- <div class="container"> -->
+        <h2>Analysis</h2>
+        <h3 class="underlined">Phase Substitution &amp; Energy Balancing</h3>
+
+            <img src="static/analysis.png"
+              alt="ϕ-Noise method overview figure"
+              class="figure-image"/>
+          <p class="fig-caption">
+            <strong>Figure 2.</strong> Phase and Energy Analysis — phase distributions, latent energy
+            evolution across denoising steps, and qualitative comparison with/without energy balancing.
+          </p>
+
+        <p>
+          Naïve phase injection disrupts the expected energy profile of the noise, causing saturation
+          artifacts and out-of-distribution denoising. ϕ-Noise applies a frequency-dependent scaling
+          mask <strong>Φ</strong> that scales down injected low-frequency magnitudes by
+          <code>1/γ</code> while compensating by scaling high frequencies by <code>β</code>,
+          guaranteeing exact energy preservation: <em>E(z̃<sub>k</sub> ⊙ Φ) = E(z̃)</em>.
+        </p>
+        <p>
+          Because the DFT and its inverse are computationally negligible relative to a single
+          diffusion step, ϕ-Noise introduces <strong>no additional runtime or memory overhead</strong>
+          and requires no changes to the model architecture or inference pipeline.
+        </p>
+      <!-- </div> -->
+    </div>
+  </section><!-- /method -->
+
+
+<!-- ════════════════════════════════════════
+     COMPARISONS  (tabbed)
+════════════════════════════════════════ -->
+<section id="comparisons">
+  <div class="method-figure">
+    <h2>Comparisons</h2>
+    <p>
+      ϕ-Noise supports three distinct video generation tasks within a single unified framework,
+      all using <strong>WAN (Wan2.2-14B)</strong> as the base model with no additional training.<br>
+    </p>
+      <span class="text-red">Choose a task from the tabs below.</span>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn" data-tab="t2v">
+        <i class="fas fa-text-width"></i>&nbsp; T2V Motion Transfer
+      </button>
+      <button class="tab-btn" data-tab="i2v">
+        <i class="fas fa-image"></i>&nbsp; I2V Motion Transfer
+      </button>
+      <button class="tab-btn" data-tab="cnd">
+        <i class="fas fa-cut"></i>&nbsp; Cut &amp; Drag
+      </button>
+    </div>
+
+    <!-- ── TAB: T2V ── -->
+    <div class="tab-panel" data-panel="t2v">
+      <p>
+        Given a reference video and a text prompt, generate a video matching the prompt
+        while preserving input motion dynamics. Spatial ϕ-Noise achieves strong alignment
+        with both textual content and motion patterns.
+      </p>
+
+      <!-- Example 1 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/climbing/matched_original.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/climbing/matched_ours.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">DMT</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/climbing/matched_dtm.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">DiTFlow</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/climbing/matched_ditflow.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "A monkey is climbing a climbing wall."</p>
+
+      <!-- Example 2 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/car/matched_original.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/car/matched_ours.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">DMT</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/car/matched_dtm.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">DiTFlow</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/car/matched_ditflow.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "A motorcycle is driving on the road."</p>
+
+      <!-- Example 4 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/dog_jump/matched_original_dog_jump.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/dog_jump/matched_ours_dog_jump.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">DMT</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/dog_jump/matched_dmt_dog_jump.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">DiTFlow</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/motion_transfer/dog_jump/matched_ditflow_dog_jump.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "A dolphin is jumping in the air into the water."</p>
+
+    </div><!-- /tab t2v -->
+
+
+    <!-- ── TAB: I2V ── -->
+    <div class="tab-panel" data-panel="i2v">
+      <p>
+        Align with both a text prompt and a first-frame image condition while following the
+        motion of the reference video. ϕ-Noise successfully transfers motion across varying
+        subjects and handles complex dynamics while preserving identity coherence.
+      </p>
+
+      <!-- Example 1 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/backflip/matched_original_backflip.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/backflip/matched_ours_backflip.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">MotionClone</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/backflip/matched_mc_backflip.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Wan</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/backflip/matched_wan_backflip.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "The person is performing a backflip."</p>
+
+      <!-- Example 2 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/labubu/matched_original_labubu.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/labubu/matched_aa_ours_labubu.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">MotionClone</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/labubu/matched_mc_labubu.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Wan</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/labubu/matched_wan_labubu.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "A motorcycle is driving on the road."</p>
+
+      <!-- Example 3 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fly/matched_original.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fly/matched_ours.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">MotionClone</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fly/matched_mc.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Wan</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fly/matched_wan.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "The person is sitting, and then suddenly flies magically."</p>
+
+      <!-- Example 4 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Reference</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fish/matched_source_svd_Fish.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fish/matched_ours_Fish.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">MotionClone</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fish/matched_mc_Fish.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Wan</span>
+                  <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/i2v_motion_transfer/fish/matched_wan_Fish.webm"></video>
+        </div>
+      </div>
+      <p class="prompt-tag"><strong>Prompt:</strong> "The shark is swimming in the ocean."</p>
+
+
+    </div><!-- /tab i2v -->
+
+
+    <!-- ── TAB: Cut & Drag ── -->
+    <div class="tab-panel" data-panel="cnd">
+      <p>
+        Users cut object patches from an image or add sprites, then animate them with rigid
+        drag paths. ϕ-Noise generates coherent videos following prescribed motion while
+        producing plausible non-rigid dynamics (e.g., fire breath, tentacle movement).
+      </p>
+
+      <!-- Example 1 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Input</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/humburger/matched_original_Humburger.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/humburger/matched_ours_Hamburger.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Time-to-Move</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/humburger/matched_ttm_Hamburger.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Go-with-the-Flow</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/humburger/matched_gwtf_Hamburger.webm"></video>
+        </div>
+      </div>
+
+
+      <!-- Example 2 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Input</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/monkey/matched_original_Monkey.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/monkey/matched_ours_Monkey.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Time-to-Move</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/monkey/matched_ttm_Monkey.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Go-with-the-Flow</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/monkey/matched_gwtf_Monkey.webm"></video>
+        </div>
+      </div>
+
+      <!-- Example 3 -->
+      <div class="comparison-row cols-4">
+        <div class="video-cell">
+          <span class="cell-label label-ref">Input</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/birds/matched_original_Birds.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label label-ours">Ours</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/birds/matched_ours_Birds.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Time-to-Move</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/birds/matched_ttm_Birds.webm"></video>
+        </div>
+        <div class="video-cell">
+          <span class="cell-label">Go-with-the-Flow</span>
+          <video autoplay muted loop playsinline class="comparison-video"><source src="static/media/comparisons/cut_n_drag/birds/matched_gwtf_Birds.webm"></video>
+        </div>
+      </div>
+    </div><!-- /tab cnd -->
+
+  </div><!-- /container -->
+</section><!-- /comparisons -->
+
+
+<!-- ════════════════════════════════════════
+     RESULTS
+════════════════════════════════════════ -->
+<section id="results">
+  <div class="method-figure">
+    <h2>Quantitative Results</h2>
+
+    <p>
+      We evaluate on a diverse benchmark of <strong>60 high-quality videos</strong>: 20 from
+      the TTM dataset, 30 from LOVEU-TGVE-2023, and 10 in-the-wild videos for real-world
+      generalization. ϕ-Noise achieves competitive or state-of-the-art results at negligible
+      additional cost.
+    </p>
+
+    <div class="results-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>CLIP-T ↑</th>
+            <th>Aes ↑</th>
+            <th>Img ↑</th>
+            <th>LPIPS-T ↓</th>
+            <th>Flow-E ↓</th>
+            <th>Subj-C ↑</th>
+            <th>Smooth ↑</th>
+            <th>Dyn-D ↑</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Wan-I2V</td>
+            <td>0.308</td><td>0.652</td><td>0.644</td>
+            <td>0.116</td><td>181.10</td><td>0.942</td><td>0.978</td><td>0.647</td>
+          </tr>
+          <tr>
+            <td>GWTF</td>
+            <td>0.314</td><td>0.620</td><td>0.637</td>
+            <td>0.097</td><td>152.81</td><td>0.942</td><td>0.981</td><td>0.647</td>
+          </tr>
+          <tr>
+            <td>TTM</td>
+            <td>0.311</td><td>0.647</td><td>0.653</td>
+            <td>0.110</td><td>102.39</td><td>0.948</td><td>0.978</td><td>0.705</td>
+          </tr>
+          <tr class="ours">
+            <td><strong>Ours (ϕ-Noise)</strong></td>
+            <td>0.313</td><td>0.637</td><td>0.627</td>
+            <td>0.171</td>
+            <td class="best">101.49</td>
+            <td>0.918</td><td>0.964</td>
+            <td class="best">0.764</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted-small">
+      ϕ-Noise achieves the best <strong>Flow-Error</strong> (motion fidelity) and
+      <strong>Dynamics-Degree</strong> scores — the two metrics most directly measuring motion
+      transfer quality — while requiring no additional training.
+    </p>
+
+  </div>
+</section><!-- /results -->
+
+
+<!-- ════════════════════════════════════════
+     BIBTEX
+════════════════════════════════════════ -->
+<section id="bibtex">
+  <div class="container">
+    <h2>BibTeX</h2>
+    <p>If you find this work useful, please cite:</p>
+    <div class="bibtex-block" id="bibtex-code">
+      <button class="copy-btn" onclick="copyBibtex()">
+        <i class="fas fa-copy"></i> Copy
+      </button>
+<pre><span class="kw">@article</span>{abramovich2025phinoise,
+  <span class="kw">title</span>   = {<span class="val">&#x3d5;-Noise: Training-Free Temporal Video Conditioning
+            via Phase-Based Noise Manipulation</span>},
+  <span class="kw">author</span>  = {<span class="val">Abramovich, Ofir and Cohen, Nadav Z. and
+            Rosenthal, Adi and Shamir, Ariel</span>},
+  <span class="kw">journal</span> = {<span class="val">arXiv preprint</span>},
+  <span class="kw">year</span>    = {<span class="val">2025</span>},
+}</pre>
+    </div>
+  </div>
+</section><!-- /bibtex -->
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  <p>ϕ-Noise &nbsp;·&nbsp; Canvas-Lab, Reichman University &nbsp;·&nbsp; 2025</p>
+  <p>Website template inspired by
+    <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">
+      Academic Project Page Template
+    </a>
+  </p>
+</footer>
+
+<!-- Project JS -->
+<script src="static/js/main.js"></script>
+
+</body>
+</html>
