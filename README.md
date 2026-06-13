@@ -1,6 +1,8 @@
+### An official implementatiton of the paper: ###
+
 <div align="center">
   <h2 style="font-size:36px; margin:0;">ϕ-Noise:<br>Training-Free Temporal Video Conditioning via Phase-Based Noise Manipulation</h2>
-  <img src="docs/static/logos/lab_logo.svg" alt="Image from the left" width="10%" style="display: inline-block; vertical-align: middle;" />
+  <img src="docs/static/logos/lab_logo.svg" alt="Image from the left" width="25%" style="display: inline-block; vertical-align: middle;" />
   <a href="https://arxiv.org/abs/2605.24509" style="display: inline-block; vertical-align: middle; margin: 0 8px;">
     <img src="https://img.shields.io/badge/arXiv-paper-b31b1b?style=flat-square&logo=arxiv&logoColor=white" alt="arXiv" />
   </a>
@@ -10,7 +12,7 @@
   <a href="https://arxiv.org/pdf/2605.24509" style="display: inline-block; vertical-align: middle; margin: 0 8px;">
     <img src="https://img.shields.io/badge/PDF-download-0066cc?style=flat-square&logo=adobeacrobatreader&logoColor=white" alt="PDF" />
   </a>
- <img src="docs/static/logos/uni_logo.png" alt="Image from the right" width="12%" style="display: inline-block; vertical-align: middle;" />
+ <img src="docs/static/logos/uni_logo.png" alt="Image from the right" width="20%" style="display: inline-block; vertical-align: middle;" />
 </div>
 
 
@@ -19,6 +21,22 @@
 - Text-to-video Motion Transfer
 - Cut-n-Drag (interactive user control over object trajectories and spatial placement)
 
+<div align="center" style="background:#ffffff; border-radius:14px; padding:14px;">
+  <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+    <div style="width:32%; min-width:220px; box-sizing:border-box;">
+      <p><strong>I2V Motion Transfer</strong></p>
+      <img src="docs/static/media/results/i2v.gif" alt="I2V Motion Transfer" width="100%" style="border-radius:10px;" />
+    </div>
+    <div style="width:32%; min-width:220px; box-sizing:border-box;">
+      <p><strong>T2V Motion Transfer</strong></p>
+      <img src="docs/static/media/results/t2v.gif" alt="T2V Motion Transfer" width="100%" style="border-radius:10px;" />
+    </div>
+    <div style="width:32%; min-width:220px; box-sizing:border-box;">
+      <p><strong>Cut n' Drag</strong></p>
+      <img src="docs/static/media/results/cnd.gif" alt="Cut n' Drag" width="100%" style="border-radius:10px;" />
+    </div>
+  </div>
+</div>
 
 ### Contents ###
 - `phi_noise_utils.py`: core frequency-mixing utilities.
