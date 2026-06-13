@@ -31,8 +31,7 @@
 
 | **I2V Motion Transfer** | **T2V Motion Transfer** | **Cut n' Drag** |
 | :---: | :---: | :---: |
-| <img src="docs/static/media/results/i2v.gif" alt="I2V Motion Transfer" width="100%"> | <img src="docs/static/media/results/t2v.gif" alt="T2V Motion Transfer" width="100%"> | <img src="docs/static/media/results/cnd.gif" alt="Cut n' Drag" width="100%"> |
-
+| ![I2V Motion Transfer](docs/static/media/results/i2v.gif) | ![T2V Motion Transfer](docs/static/media/results/t2v.gif) | ![Cut n' Drag](docs/static/media/results/cnd.gif) |
 ### Contents ###
 - `phi_noise_utils.py`: core frequency-mixing utilities.
 - `video_processing_utils.py`: Video utilities: preprocessing and adjusting sizes/lengths.
