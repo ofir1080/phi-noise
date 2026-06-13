@@ -3,25 +3,29 @@
 <table align="center">
   <tr>
     <td align="center" width="22%">
-      <img src="docs/static/logos/lab_logo.svg" alt="Lab logo" width="100%" />
+      <img src="docs/static/logos/lab_logo.png" alt="Lab logo" width="100%" />
     </td>
     <td align="center" width="56%">
-      <h2 style="font-size:36px; margin:0;">ϕ-Noise:<br>Training-Free Temporal Video Conditioning via Phase-Based Noise Manipulation</h2>
-      <a href="https://arxiv.org/abs/2605.24509">
-        <img src="https://img.shields.io/badge/arXiv-paper-b31b1b?style=flat-square&logo=arxiv&logoColor=white" alt="arXiv" />
-      </a>
-      <a href="https://ofirabramovich.github.io/phi-noise/">
-        <img src="https://img.shields.io/badge/Web-page-1f77b4?style=flat-square&logo=github&logoColor=white" alt="Web page" />
-      </a>
-      <a href="https://arxiv.org/pdf/2605.24509">
-        <img src="https://img.shields.io/badge/PDF-download-0066cc?style=flat-square&logo=adobeacrobatreader&logoColor=white" alt="PDF" />
-      </a>
+      <strong>This is an official implementation of the paper.</strong>
     </td>
     <td align="center" width="22%">
       <img src="docs/static/logos/uni_logo.png" alt="University logo" width="100%" />
     </td>
   </tr>
 </table>
+
+<div align="center">
+  <h2 style="font-size:36px; margin:0;">ϕ-Noise:<br>Training-Free Temporal Video Conditioning via Phase-Based Noise Manipulation</h2>
+  <a href="https://arxiv.org/abs/2605.24509">
+    <img src="https://img.shields.io/badge/arXiv-paper-b31b1b?style=flat-square&logo=arxiv&logoColor=white" alt="arXiv" />
+  </a>
+  <a href="https://ofirabramovich.github.io/phi-noise/">
+    <img src="https://img.shields.io/badge/Web-page-1f77b4?style=flat-square&logo=github&logoColor=white" alt="Web page" />
+  </a>
+  <a href="https://arxiv.org/pdf/2605.24509">
+    <img src="https://img.shields.io/badge/PDF-download-0066cc?style=flat-square&logo=adobeacrobatreader&logoColor=white" alt="PDF" />
+  </a>
+</div>
 
 
 *Φ-Noise* enables motion and structure conditioning for diffusion-based video generation. By utilizing low-frequency components in either the spatial or temporal dimensions, it facilitates precise motion transfer and supports three key applications:
