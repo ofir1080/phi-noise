@@ -8,7 +8,7 @@
       <a href="https://arxiv.org/abs/2605.24509">
         <img src="https://img.shields.io/badge/arXiv-paper-b31b1b?style=flat-square&logo=arxiv&logoColor=white" alt="arXiv" />
       </a>
-      <a href="https://ofirabramovich.github.io/phi-noise/">
+      <a href="https://ofir1080.github.io/phi-noise/">
         <img src="https://img.shields.io/badge/Web-page-1f77b4?style=flat-square&logo=github&logoColor=white" alt="Web page" />
       </a>
       <a href="https://arxiv.org/pdf/2605.24509">
