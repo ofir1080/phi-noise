@@ -1,5 +1,3 @@
-### An official implementatiton of the paper: ###
-
 <table align="center">
   <tr>
     <td align="center" width="22%">
@@ -23,6 +21,7 @@
   </tr>
 </table>
 
+### An official implementatiton of the paper. ###
 
 *Φ-Noise* enables motion and structure conditioning for diffusion-based video generation. By utilizing low-frequency components in either the spatial or temporal dimensions, it facilitates precise motion transfer and supports three key applications:
 - Image-to-video motion Transfer
@@ -42,7 +41,7 @@
 
 ### Highlights ###
 - *Φ-Noise* is **training-free** temporal conditioning via phase/magnitude mixing in frequency domain.
-- this code (`freq_mix_temporal` and `freq_mix_spatial` in [phi_noise_utils.py])(phi_noise_utils.py#L1-L220) can be integrated easily with any diffusion-based video model.
+- this code (`freq_mix_temporal` and `freq_mix_spatial` in [phi_noise_utils.py](phi_noise_utils.py#L1-L220) can be integrated easily with any diffusion-based video model.
 - We supply an example integration for Wan2.2 model [Wan2.2_phi-noise/generate.py](Wan2.2_phi-noise/generate.py#L1-L520).
 
 
@@ -60,7 +59,7 @@ Run the Wan example script (multi-GPU via torch.distributed.run). Make sure both
 
 T2V Motion Trasfer:
 ```bash
-export PYTHONPATH=absolute-patto/phi-noise/Wan2.2_phi-noise
+export PYTHONPATH=absolute-path/phi-noise/Wan2.2_phi-noise
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 python -m torch.distributed.run \
   --nproc_per_node 8 --master_port 29501 Wan2.2_phi-noise/generate.py \
@@ -68,33 +67,37 @@ python -m torch.distributed.run \
   --ckpt_dir /path/to/checkpoints --offload_model False --convert_model_dtype \
   --dit_fsdp --prompt "A yellow helicopter is flying in the beach. Camera is fixed and static. Fixed Background." \
   --pn_ref_path guidance_exmaples/preprocessed_14B-low_81f_duck.mp4 --pn_task t2v_mt \
-  --pn_gamma 3 --pn_alpha 4
+  --pn_gamma 5 --pn_alpha 4
 ```
 
 I2V Motion Trasfer:
 ```bash
-export PYTHONPATH=absolute-patto/phi-noise/Wan2.2_phi-noise
+export PYTHONPATH=absolute-path/to/phi-noise/Wan2.2_phi-noise
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 python -m torch.distributed.run \
   --nproc_per_node 8 --master_port 29501 Wan2.2_phi-noise/generate.py \
   --ulysses_size 8 --task t2v-A14B --size "832*480" --sample_steps 20 \
   --ckpt_dir /path/to/checkpoints --offload_model False --convert_model_dtype \
-  --dit_fsdp --prompt "A yellow helicopter is flying in the beach. Camera is fixed and static. Fixed Background." \
-  --pn_ref_path guidance_exmaples/preprocessed_14B-low_81f_duck.mp4 --pn_task t2v_mt \
-  --pn_gamma 3 --pn_alpha 4
+  --dit_fsdp --prompt "The cat is turning its head towards the camera and after a second starts waving hello its right paw. Camera is fixed and static. Fixed Background." \
+  --image "guidance_exmaples/mt-it2m/cat_in_nature.jpg" \
+  --pn_ref_path guidance_exmaples/mt-it2m/preprocessed_14B-low_81f_woman_turning.mp4 \
+  --pn_task i2v_mt \
+  --pn_gamma 3 --pn_alpha 3
 ```
 
 Cut n' Drag:
 ```bash
-export PYTHONPATH=absolute-patto/phi-noise/Wan2.2_phi-noise
+export PYTHONPATH=absolute-path/phi-noise/Wan2.2_phi-noise
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 python -m torch.distributed.run \
   --nproc_per_node 8 --master_port 29501 Wan2.2_phi-noise/generate.py \
-  --ulysses_size 8 --task t2v-A14B --size "832*480" --sample_steps 20 \
-  --ckpt_dir /path/to/checkpoints --offload_model False --convert_model_dtype \
-  --dit_fsdp --prompt "A yellow helicopter is flying in the beach. Camera is fixed and static. Fixed Background." \
-  --pn_ref_path guidance_exmaples/preprocessed_14B-low_81f_duck.mp4 --pn_task t2v_mt \
-  --pn_gamma 3 --pn_alpha 4
+  --ulysses_size 8 --task i2v-A14B --size "832*480" --sample_steps 20 \
+  --ckpt_dir /path/to/checkpoints --offload_model False --convert_model_dtype --dit_fsdp \
+  --prompt "A flock of birds flies gracefully across the sky above a natural landscape." \
+  --image "guidance_exmaples/cut_n_drag/preprocessed_14B-low_81f_birds_ff.png"\
+  --pn_ref_path guidance_exmaples/cut_n_drag/preprocessed_14B-low_81f_birds.mp4 \
+  --pn_task t2v_mt \
+  --pn_gamma 30 --pn_alpha 3
 ```
 *Tip*: To run with multiple gamma or alpha values, pass them with `#` separators, for example: `--pn_alpha arg1#arg2#arg3`.
 
