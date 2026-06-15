@@ -4,6 +4,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Active nav link on scroll
   const observedSections = document.querySelectorAll('section[id], div[id="teaser"]');
   const navAnchors = document.querySelectorAll('#navbar a[href^="#"]');
@@ -33,11 +35,88 @@ document.addEventListener('DOMContentLoaded', () => {
         section.querySelectorAll('.tab-panel').forEach(p => {
           p.classList.toggle('active', p.dataset.panel === target);
         });
+        window.requestAnimationFrame(syncComparisonVideos);
       });
     });
 
     if (btns.length) btns[0].click();
   });
+
+  const comparisonVideos = Array.from(document.querySelectorAll('video.comparison-video'));
+
+  const loadComparisonVideo = (video) => {
+    if (video.dataset.loaded === 'true') return;
+
+    const source = video.querySelector('source[data-src]');
+    if (source && !source.src) {
+      source.src = source.dataset.src;
+    }
+
+    video.load();
+    video.dataset.loaded = 'true';
+  };
+
+  const playComparisonVideo = (video) => {
+    if (reducedMotion) return;
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  };
+
+  function syncComparisonVideos() {
+    comparisonVideos.forEach((video) => {
+      const panel = video.closest('.tab-panel');
+      const panelIsVisible = !panel || panel.classList.contains('active');
+
+      if (!panelIsVisible) {
+        video.pause();
+        return;
+      }
+
+      const rect = video.getBoundingClientRect();
+      const inViewport = rect.bottom > 0 && rect.right > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
+
+      if (!inViewport) {
+        video.pause();
+        return;
+      }
+
+      loadComparisonVideo(video);
+      playComparisonVideo(video);
+    });
+  }
+
+  if (comparisonVideos.length) {
+    const comparisonObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+
+        if (!entry.isIntersecting) {
+          video.pause();
+          return;
+        }
+
+        const panel = video.closest('.tab-panel');
+        if (panel && !panel.classList.contains('active')) {
+          return;
+        }
+
+        loadComparisonVideo(video);
+        playComparisonVideo(video);
+      });
+    }, { rootMargin: '160px 0px', threshold: 0.35 });
+
+    comparisonVideos.forEach(video => {
+      video.preload = 'none';
+      video.pause();
+      comparisonObserver.observe(video);
+    });
+
+    window.addEventListener('scroll', syncComparisonVideos, { passive: true });
+    window.addEventListener('resize', syncComparisonVideos);
+    syncComparisonVideos();
+  }
 
   // BibTeX copy helper
   window.copyBibtex = function () {
