@@ -68,9 +68,7 @@ docs/**/*.avi
 docs/**/*.mkv
 
 # exclude:
-!static/media/phi_noise_vid.mp4
-!static/media/teaser.mov
-!static/media/results/*
+!docs/static/media/phi_noise_vid.mp4
 
 OUTPUTS/
 guidance_exmaples/**/preprocessed*
