@@ -62,12 +62,15 @@ Thumbs.db
 secrets.yml
 
 # Ignore uploaded large files
-*.mp4
-*.mov
-*.avi
-*.mkv
+docs/**/*.mp4
+docs/**/*.mov
+docs/**/*.avi
+docs/**/*.mkv
 
 # exclude:
 !static/media/phi_noise_vid.mp4
 !static/media/teaser.mov
 !static/media/results/*
+
+OUTPUTS/
+guidance_exmaples/**/preprocessed*
