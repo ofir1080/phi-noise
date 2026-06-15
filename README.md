@@ -25,7 +25,7 @@
 
 *Φ-Noise* enables motion and structure conditioning for diffusion-based video generation. By utilizing low-frequency components in either the spatial or temporal dimensions, it facilitates precise motion transfer and supports three key applications:
 - Image-to-video motion Transfer
-- Text-to-video Motion Transfer
+- Text-to-video Motion Transfer + Structural Conditioning
 - Cut-n-Drag (interactive user control over object trajectories and spatial placement)
 
 | **I2V Motion Transfer** | **T2V Motion Transfer** | **Cut n' Drag** |
@@ -58,7 +58,7 @@ For a new input video, first preprocess it with `video_processing_utils.py` so t
 
 Run the Wan example script (multi-GPU via torch.distributed.run). Make sure both the workspace root and the Wan folder are on `PYTHONPATH` so `phi_noise_utils` and `wan` import correctly. Example commands (adjust `--nproc_per_node`, `--ulysses_size`, `CUDA_VISIBLE_DEVICES`, and `--ckpt_dir`):
 
-T2V Motion Trasfer:
+T2V Motion Trasfer + Structural Conditioning:
 ```bash
 export PYTHONPATH=absolute-path/phi-noise/Wan2.2_phi-noise
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
@@ -108,11 +108,11 @@ As utilities in your own code (recommended):
 ```python
 from phi_noise_utils import freq_mix_temporal, freq_mix_spatial
 
-# freq_mix_temporal expects lists like [latents] and returns a list
-latents = freq_mix_temporal(noise_list, latents_ref_list, alpha=3, gamma=30.0) # recommended range values: gamma: alpha: [3-6], gamma: [30]
+# temporal Φ-noise (for I2V-related tasks)
+latents = freq_mix_temporal(noise_latents, ref_latents, alpha=3, gamma=30.0) # recommended range values: gamma: alpha: [3-6], gamma: [30]
 
-# freq_mix_spatial mixes spatial phase; returns a tensor
-out = freq_mix_spatial(latents_hi, latents_lo, alpha=3, gamma=4.0, dims=("h","w")) # recommended range values: gamma: alpha: [3-4], gamma: [5-10]
+# spatial Φ-noise (for T2V Motion Transfer + Structural Conditioning)
+mixed_latents = freq_mix_spatial(noise_latents, ref_latents, alpha=3, gamma=4.0, dims=("h","w")) # recommended range values: gamma: alpha: [3-4], gamma: [5-10]
 ```
 
 
