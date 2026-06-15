@@ -1,3 +1,18 @@
+---
+license: apache-2.0
+language:
+- en
+base_model:
+- Wan-AI/Wan2.2-TI2V-5B
+- Wan-AI/Wan2.2-I2V-A14B
+pipeline_tag: video-to-video
+tags:
+- Diffusion
+- Video
+- V2V
+- IN2V
+---
+
 <table align="center">
   <tr>
     <td align="center" width="22%">
