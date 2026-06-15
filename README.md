@@ -36,7 +36,8 @@
 ### Contents ###
 - `phi_noise_utils.py`: core frequency-mixing utilities.
 - `video_processing_utils.py`: Video utilities: preprocessing and adjusting sizes/lengths.
-- `Wan2.2_phi-noise/`: A fork of [Wan2.2 official GitHub](https://github.com/Wan-Video/Wan2.2) with small adjustments for the integration of our method.
+- `Wan2.2_phi-noise/`: A fork of [Wan2.2 official GitHub](https://github.com/Wan-Video/Wan2.2) with small adjustments for the integration of our method. \
+*Note*: You have to git-clone it from the root directory (`git clone git@github.com:ofir1080/Wan2.2_phi-noise.git`).
 
 
 ### Highlights ###
@@ -52,10 +53,10 @@ For installation instruction of Wan2.2, please refer to [Wan2.2/INSTALL.md](http
 ### Usage ###
 
 #### Φ-Noise + Wan2.2 ####
- 
+
 For a new input video, first preprocess it with `video_processing_utils.py` so the FPS, frame size, and clip length match the model requirements. This saves the preprocessed video in addition to the first frame (for I2V Motio Transfer).
 
-Run the Wan example script (multi-GPU via torch.distributed.run). Make sure both the workspace root and the Wan folder are on `PYTHONPATH` so `phi_noise_utils` and `wan` import correctly. Example commands (adjust `--nproc_per_node`, `CUDA_VISIBLE_DEVICES`, and `--ckpt_dir`):
+Run the Wan example script (multi-GPU via torch.distributed.run). Make sure both the workspace root and the Wan folder are on `PYTHONPATH` so `phi_noise_utils` and `wan` import correctly. Example commands (adjust `--nproc_per_node`, `--ulysses_size`, `CUDA_VISIBLE_DEVICES`, and `--ckpt_dir`):
 
 T2V Motion Trasfer:
 ```bash
