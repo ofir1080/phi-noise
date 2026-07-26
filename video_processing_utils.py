@@ -323,7 +323,7 @@ def decode_latent_img(latent, save_path='./latent.png'):
 
 
 if __name__ == "__main__":
-    VID_TO_PROCESS = 'guidance_exmaples/woman_turning.mp4'
+    VID_TO_PROCESS = 'guidance_exmaples/mt-it2m/woman_turning.mp4'
     # for I2V motion transfer
     # IMG_SOURCE = 'guidance_exmaples/i2v-mt/rock.png'
     

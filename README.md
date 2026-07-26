@@ -92,13 +92,13 @@ export PYTHONPATH=absolute-path/to/phi-noise/Wan2.2_phi-noise
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 python -m torch.distributed.run \
   --nproc_per_node 8 --master_port 29501 Wan2.2_phi-noise/generate.py \
-  --ulysses_size 8 --task t2v-A14B --size "832*480" --sample_steps 20 \
+  --ulysses_size 8 --task i2v-A14B --size "832*480" --sample_steps 20 \
   --ckpt_dir /path/to/checkpoints --offload_model False --convert_model_dtype \
   --dit_fsdp --prompt "The cat is turning its head towards the camera and after a second starts waving hello its right paw. Camera is fixed and static. Fixed Background." \
   --image "guidance_exmaples/mt-it2m/cat_in_nature.jpg" \
   --pn_ref_path guidance_exmaples/mt-it2m/preprocessed_14B-low_81f_woman_turning.mp4 \
   --pn_task i2v_mt \
-  --pn_gamma 3 --pn_alpha 3
+  --pn_gamma 30 --pn_alpha 3
 ```
 
 Cut n' Drag:

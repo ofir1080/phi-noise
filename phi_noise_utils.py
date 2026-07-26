@@ -34,7 +34,7 @@ def _frequency_radius_grid(latents: torch.Tensor, fft_dims: tuple[int, ...]) -> 
     return torch.sqrt(rr)
 
 
-def freq_mix_temporal(l1, l2, gamma=30.0, alpha=3, **kwargs):
+def freq_mix_temporal(l1, l2, gamma=30.0, alpha=3, norm_type='balanced', **kwargs):
     """Mix temporal frequency magnitude from ``l1`` with phase from ``l2``."""
 
     l1, l2 = l1[0], l2[0]
@@ -51,14 +51,21 @@ def freq_mix_temporal(l1, l2, gamma=30.0, alpha=3, **kwargs):
         mixed_t = torch.polar(magnitude1_t, phase2_t)
 
         mixed_t[:, alpha:] = fft1_t[:, alpha:]
-
-        high_band_scale = _temporal_high_band_scale(mixed_t, alpha, gamma)
-        temporal_scale = torch.empty(mixed_t.shape[1], device=mixed_t.device, dtype=mixed_t.real.dtype)
-        temporal_scale[:alpha] = 1.0 / gamma
-        temporal_scale[alpha:] = high_band_scale
-        mixed_t_final = mixed_t * temporal_scale[None, :, None, None]
-        logging.info("beta term: %f", high_band_scale)
+        if norm_type == 'balanced':
+            high_band_scale = _temporal_high_band_scale(mixed_t, alpha, gamma)
+            temporal_scale = torch.empty(mixed_t.shape[1], device=mixed_t.device, dtype=mixed_t.real.dtype)
+            temporal_scale[:alpha] = 1.0 / gamma
+            temporal_scale[alpha:] = high_band_scale
+            mixed_t_final = mixed_t * temporal_scale[None, :, None, None]
+            logging.info("beta term: %f", high_band_scale)
+        else:
+            if norm_type == 'imbalannced':
+                mixed_t_final = mixed_t
+                mixed_t_final[:, :alpha] = mixed_t_final[:, :alpha] / gamma
+            elif norm_type == 'none':
+                mixed_t_final = mixed_t
         logging.info(f'l1_f norm: {l1_f.norm()}\t{l1.norm()}')
+        logging.info(f'>>>>>> Normalization type: {norm_type} <<<<<<<')
 
     else:
         mixed_t_final = fft1_t.clone()

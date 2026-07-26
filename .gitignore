@@ -72,3 +72,4 @@ docs/**/*.mkv
 
 OUTPUTS/
 guidance_exmaples/**/preprocessed*
+checkpoints/
